@@ -12,7 +12,7 @@ import java.time.Duration;
 public class BaseClass {
 
     public WebDriver driver;
-    //Test Comments
+    //Test Comments for testing Jenkins Build Trigger
     public WebDriver initializeDriver(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
