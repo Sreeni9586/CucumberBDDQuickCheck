@@ -12,7 +12,7 @@ import java.time.Duration;
 public class BaseClass {
 
     public WebDriver driver;
-
+    //Test Comments
     public WebDriver initializeDriver(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
