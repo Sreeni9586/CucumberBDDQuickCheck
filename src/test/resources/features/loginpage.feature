@@ -11,7 +11,14 @@ Feature:Login Functionality for OpenCart E-commerce Website
       When I click on the login button
       Then I should be logged in successfully
 
-    Scenario Outline: Unsuccessful login with invalid or empty credentials
+  @loginFailure
+  Scenario: SingleTest: Unsuccessful login with invalid or empty credentials
+    Given I have entered invalid "invalid@emails.com" and "invalidPasswords"
+    When I click on the login button
+    Then I should see an error message indicating "Warning: No match for E-Mail Address and/or Password."
+
+    @loginFailures
+    Scenario Outline: Unsuccessful logins with invalid or empty credentials
       Given I have entered invalid "<username>" and "<password>"
       When I click on the login button
       Then I should see an error message indicating "<error_message>"

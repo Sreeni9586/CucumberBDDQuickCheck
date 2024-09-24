@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(features="src/test/resources/features",
                   glue={"stepdefs"},
                    plugin = {"pretty","html:target/cucumber-reports","json:target/cucumber.json"},
-                    //tags= "@loginSuccess",
+                    //tags= "@loginFailure",
                     monochrome = true,publish = true)
 
 public class CukesRunner extends AbstractTestNGCucumberTests {

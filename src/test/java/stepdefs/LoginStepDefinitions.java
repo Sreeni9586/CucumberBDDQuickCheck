@@ -1,6 +1,7 @@
 package stepdefs;
 
 import base.BaseClass;
+import commonUtilities.ComponentsGeneral;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -8,29 +9,30 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import pages.LoginPage;
 
-    public class LoginStepDefinitions extends BaseClass {
+import java.time.Duration;
 
-     private WebDriver driver;
+public class LoginStepDefinitions extends BaseClass {
+
+        private WebDriver driver;
         private LoginPage loginPage;
+        private ComponentsGeneral compGen;
 
-//        @Before
-//        public void setup(){
-//            driver = new ChromeDriver();
-//        }
         @Before
         public void setup() {
-            driver = initializeDriver();
+            driver = initializeDriver("chrome");
+            this.driver = driver;
         }
         @After
         public void tearDown(){
-            if(driver!=null){
-                driver.quit();
-            }
+            tearDown(driver);
+
         }
+
 
 
         @Given("I am on the OpenCart login page")
@@ -62,12 +64,14 @@ import pages.LoginPage;
             Assert.assertEquals(loginPage.checkLogoutLink(), true);
         }
 
-
-
         @Then("I should see an error message indicating {string}")
-        public void i_should_see_an_error_message_indicating(String errorMessage) {
+        public void i_should_see_an_error_message_indicating(String errorMessage) throws InterruptedException {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            compGen = new ComponentsGeneral(driver);
+            WebElement errorMsg = driver.findElement(By.xpath("//div[contains(@class,'alert-danger')]"));
+            compGen.waitForElement(errorMsg,"visible");
             // Assert that an error message is displayed on the page matching the expected error message
-            Assert.assertEquals( driver.findElement(By.cssSelector(".alert-danger")).isDisplayed(), true);
+            Assert.assertEquals( errorMsg.isDisplayed(), true);
         }
 
         @When("I click on the \"Forgotten Password\" link")
